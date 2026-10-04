@@ -1,4 +1,4 @@
-name: Kernel Build
+ name: Kernel Build
 
 on:
   workflow_dispatch:
@@ -26,14 +26,14 @@ jobs:
         NAME: kernel_xiaomi_onclite
       with:
         arch: arm64
-        compiler: gcc/12
+        compiler: gcc/14
         defconfig: sdm845_defconfig
         image: Image.gz-dtb
 
     - name: Upload Kernel and Module
       uses: actions/upload-artifact@v4
       with:
-        name: module
+        name: moduleandkernel
         path: |
           ${{ steps.build.outputs.outfile }}
           ./out/drivers/memkernel/memkernel.ko
