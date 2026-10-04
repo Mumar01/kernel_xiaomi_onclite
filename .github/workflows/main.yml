@@ -6,11 +6,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout kernel source
       uses: actions/checkout@v4
 
-    - name: Set up MemKernel as a module (M-OUT) with specified name
+    - name: Fix Git safe directory
+      run: |
+        git config --global --add safe.directory /github/workspace
+
+    - name: Set up MemKernel as a module
       run: |
         curl -LSs "https://raw.githubusercontent.com/Poko-Apps/MemKernel/main/kernel/setup.sh" | bash -s M
 
@@ -20,7 +25,7 @@ jobs:
       env:
         NAME: kernel_xiaomi_onclite
       with:
-        arch: arm64/arm32
+        arch: arm64
         compiler: gcc/12
         defconfig: sdm845_defconfig
         image: Image.gz-dtb
